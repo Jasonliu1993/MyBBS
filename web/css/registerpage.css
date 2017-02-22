@@ -1,0 +1,34 @@
+.mainContent {
+    width: 700px;
+    height: 754px;
+    margin: 0 auto;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
+.mainContent .displayArea {
+    width: 533px;
+    height: 275px;
+    margin: 191px auto;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
+.mainContent .displayArea .inputArea {
+    text-align: center;
+}
+.mainContent .displayArea input[type = "text"] {
+    width: 300px;
+    height: 20px;
+    margin: 30px auto;
+}
+.mainContent .displayArea input[type = "password"] {
+    width: 300px;
+    height: 20px;
+    margin: 30px auto;
+}
+.mainContent .displayArea input[type = "submit"]{
+    margin-left: 396px;
+    width: 50px;
+    height: 30px;
+    border: 1px solid white;
+    box-sizing: border-box;
+}

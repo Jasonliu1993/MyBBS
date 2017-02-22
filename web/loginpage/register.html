@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <link rel="stylesheet" type="text/css" href="../css/registerpage.css">
+    <link rel="stylesheet" type="text/css" href="../css/commoncss.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="mainContent">
+    <div class="displayArea">
+        <form action="/RegisterController" method="post">
+            <div class="inputArea">
+                <label for="name">用户名:</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="inputArea">
+                <label for="password">密&nbsp&nbsp&nbsp&nbsp码:</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <div class="buttomArea">
+                <input type="submit" value="提交">
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

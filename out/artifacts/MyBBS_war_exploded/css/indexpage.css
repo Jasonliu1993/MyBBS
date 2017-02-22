@@ -1,0 +1,50 @@
+.mainContent {
+    width: 800px;
+    height: 300px;
+    margin: 150px auto;
+    border: 1px solid white;
+    box-sizing: border-box;
+    background-color: #bfe6e8;
+}
+.leftContent{
+    width: 399px;
+    height: 300px;
+    float: left;
+}
+.leftContent img{
+    width: 399px;
+    height: 300px;
+}
+.rightContent{
+    width: 399px;
+    height: 300px;
+    float: right;
+}
+.inputArea {
+    width: 300px;
+    margin: 50px auto;
+}
+.inputArea label {
+    width: 50px;
+    height: 50px;
+}
+.inputArea input {
+    height: 20px;
+    width: 100px;
+}
+.buttomArea {
+    margin-left: 50px;
+}
+input[type = 'button'] {
+    width: 50px;
+    height: 30px;
+    margin-left: 50px;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
+input[type = 'submit'] {
+    width: 50px;
+    height: 30px;
+    border: 1px solid white;
+    box-sizing: border-box;
+}
