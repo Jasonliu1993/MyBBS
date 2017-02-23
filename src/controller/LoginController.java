@@ -1,17 +1,14 @@
 package controller;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import javabean.*;
 import process.LoginDataProcess;
-
-import java.util.*;
 
 /**
  * Created by Jason on 2/20/17.
@@ -25,8 +22,12 @@ public class LoginController extends HttpServlet {
         String password = request.getParameter("password");
         System.out.println(name + "@@@" + password);
         LoginData loginData = LoginDataProcess.getLoginDate(name);
-        if (loginData.getPassword().equals(password)) {
+        if (loginData.getPassword() != null || password.equals(loginData.getPassword())) {
+            HttpSession session = request.getSession();
+            session.setAttribute("test","你好");
             getServletConfig().getServletContext().getRequestDispatcher("/main/mainPage.jsp").forward(request, response);
+        } else {
+            getServletConfig().getServletContext().getRequestDispatcher("/errorPage.jsp").forward(request, response);
         }
     }
 }
