@@ -18,8 +18,12 @@
             width: 100%;
             height: 30px;
             line-height:30px;
+            background-color: rgba(0,0,0,0.5);
             position: fixed;
             z-index: 9999;
+        }
+        .title span {
+            padding-left: 300px;
         }
         .mainPage {
             width: 1000px;
@@ -28,6 +32,9 @@
             border: 1px solid white;
             box-sizing: border-box;
             background-color: #d5d5d5;
+        }
+        .mainPage div {
+            height: 30px;
         }
         .mainList {
             width: 1000px;
@@ -120,9 +127,10 @@
 </head>
 <body style="background-color: #d5d5d5">
     <div class="title">
-        sadfasd
+        <span>欢迎: sadfasd</span>
     </div>
     <div class="mainPage">
+        <div></div>
         <ul class="mainList">
             <li>
                 <span>sdfadf</span>
