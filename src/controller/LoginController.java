@@ -22,7 +22,7 @@ public class LoginController extends HttpServlet {
         String password = request.getParameter("password");
         System.out.println(name + "@@@" + password);
         LoginData loginData = LoginDataProcess.getLoginDate(name);
-        if (loginData.getPassword() != null || password.equals(loginData.getPassword())) {
+        if (loginData.getPassword() != null && password.equals(loginData.getPassword())) {
             HttpSession session = request.getSession();
             session.setAttribute("test","你好");
             getServletConfig().getServletContext().getRequestDispatcher("/main/mainPage.jsp").forward(request, response);

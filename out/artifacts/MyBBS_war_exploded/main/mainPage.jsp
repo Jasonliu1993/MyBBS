@@ -9,6 +9,37 @@
 <html>
 <head>
     <title>BBS论坛</title>
+    <script type="text/JavaScript" charset="utf-8" src="/js/jquery-3.1.1.min.js"></script>
+
+    <script charset="utf-8">
+        function ajax2SendForum() {
+            $.ajax({
+                url: '/SendForum',
+                type: "POST",//请求方式：get或post
+                scriptCharset: 'utf-8',
+                dataType: "json",//数据返回类型：xml、json、script
+                cache: false,
+                data: {
+                    'theme': $("#theme").val(),
+                    'content': $("#contentArea").val()
+                },//自定义提交的数据
+                success: function (json) {
+                    if (json.Message !== null || json.Message !== undefined || json.Message !== '') {
+                        /*document.getElementById('inputText').value = '';*/
+                        for (var i = 0; i < json.length; i++) {
+                            alert(json[i].theme)
+                            //alert(json.ResponseThemeList.themeID + "@@" + json.ResponseThemeList.theme + "@@" + json.ResponseThemeList.currentPage + "@@" + json.ResponseThemeList.totalPage);
+                            //document.getElementById('displayArea').innerHTML += '<div align="left"><p id="' + ID + '">' + json[i].message + '</p></div>';
+                        }
+                    }
+                },
+                error: function (json) {
+                    alert("This is Error!")
+                }
+            })
+        }
+    </script>
+
     <style>
         * {
             margin: 0;
@@ -18,8 +49,12 @@
             width: 100%;
             height: 30px;
             line-height:30px;
+            background-color: rgba(0,0,0,0.5);
             position: fixed;
             z-index: 9999;
+        }
+        .title span {
+            padding-left: 300px;
         }
         .mainPage {
             width: 1000px;
@@ -29,11 +64,13 @@
             box-sizing: border-box;
             background-color: #d5d5d5;
         }
+        .mainPage div {
+            height: 30px;
+        }
         .mainList {
             width: 1000px;
             margin: 0 auto;
             list-style: none;
-            background-color: ;
         }
         .mainList li:nth-child(2n + 1) {
             width: 1000px;
@@ -120,9 +157,10 @@
 </head>
 <body style="background-color: #d5d5d5">
     <div class="title">
-        sadfasd
+        <span>欢迎: sadfasd</span>
     </div>
     <div class="mainPage">
+        <div></div>
         <ul class="mainList">
             <li>
                 <span>sdfadf</span>
@@ -143,10 +181,10 @@
         </div>
         <div class="contentArea">
             <span class="contentLabelArea"></span>
-            <textarea name="contectArea" id="contectArea" class="contentInputArea"></textarea>
+            <textarea name="contentArea" id="contentArea" class="contentInputArea"></textarea>
         </div>
         <div class="submitArea">
-            <button class="inputBottom">发表帖子</button>
+            <button class="inputBottom" onclick="ajax2SendForum()">发表帖子</button>
         </div>
     </div>
 </body>
