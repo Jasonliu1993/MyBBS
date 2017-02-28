@@ -10,36 +10,6 @@
 <head>
     <title>BBS论坛</title>
     <script type="text/JavaScript" charset="utf-8" src="/js/jquery-3.1.1.min.js"></script>
-
-    <script charset="utf-8">
-        function ajax2SendForum() {
-            $.ajax({
-                url: '/SendForum',
-                type: "POST",//请求方式：get或post
-                scriptCharset: 'utf-8',
-                dataType: "json",//数据返回类型：xml、json、script
-                cache: false,
-                data: {
-                    'theme': $("#theme").val(),
-                    'content': $("#contentArea").val()
-                },//自定义提交的数据
-                success: function (json) {
-                    if (json.Message !== null || json.Message !== undefined || json.Message !== '') {
-                        /*document.getElementById('inputText').value = '';*/
-                        for (var i = 0; i < json.length; i++) {
-                            alert(json[i].theme)
-                            //alert(json.ResponseThemeList.themeID + "@@" + json.ResponseThemeList.theme + "@@" + json.ResponseThemeList.currentPage + "@@" + json.ResponseThemeList.totalPage);
-                            //document.getElementById('displayArea').innerHTML += '<div align="left"><p id="' + ID + '">' + json[i].message + '</p></div>';
-                        }
-                    }
-                },
-                error: function (json) {
-                    alert("This is Error!")
-                }
-            })
-        }
-    </script>
-
     <style>
         * {
             margin: 0;
@@ -64,7 +34,7 @@
             box-sizing: border-box;
             background-color: #d5d5d5;
         }
-        .mainPage div {
+        .mainPage .filled {
             height: 30px;
         }
         .mainList {
@@ -149,9 +119,13 @@
             padding-left: 133px;
             padding-top: 7px;
         }
-        .submitArea button {
+        .submitArea input[type = "submit"] {
             height: 30px;
             width: 50px;
+            border: 1px solid white;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -160,7 +134,7 @@
         <span>欢迎: sadfasd</span>
     </div>
     <div class="mainPage">
-        <div></div>
+        <div class="filled"></div>
         <ul class="mainList">
             <li>
                 <span>sdfadf</span>
@@ -170,22 +144,24 @@
             </li>
         </ul>
     </div>
-    <div class="inputArea">
-        <div class="themeArea">
-            <span class="themeLabelArea">
-                <label for="theme">主题:</label>
-            </span>
-            <span class="themeInputArea">
-                <input type="text" name="theme" id="theme">
-            </span>
+    <form action="/SendForumController?action=theme" method="post">
+        <div class="inputArea">
+            <div class="themeArea">
+                <span class="themeLabelArea">
+                    <label for="theme">主题:</label>
+                </span>
+                <span class="themeInputArea">
+                    <input type="text" name="theme" id="theme">
+                </span>
+            </div>
+            <div class="contentArea">
+                <span class="contentLabelArea"></span>
+                <textarea name="contentArea" id="contentArea" class="contentInputArea"></textarea>
+            </div>
+            <div class="submitArea">
+                <input type="submit" class="inputBottom" value="发表帖子">
+            </div>
         </div>
-        <div class="contentArea">
-            <span class="contentLabelArea"></span>
-            <textarea name="contentArea" id="contentArea" class="contentInputArea"></textarea>
-        </div>
-        <div class="submitArea">
-            <button class="inputBottom" onclick="ajax2SendForum()">发表帖子</button>
-        </div>
-    </div>
+    </form>
 </body>
 </html>
