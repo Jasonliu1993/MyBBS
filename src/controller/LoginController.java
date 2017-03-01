@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import javabean.*;
+import process.ForumThemeProcess;
 import process.LoginDataProcess;
 
 /**
@@ -24,7 +25,8 @@ public class LoginController extends HttpServlet {
         LoginData loginData = LoginDataProcess.getLoginDate(name);
         if (loginData.getPassword() != null && password.equals(loginData.getPassword())) {
             HttpSession session = request.getSession();
-            session.setAttribute("test","你好");
+            session.setAttribute("user",name);
+            request.setAttribute("themeList",ForumThemeProcess.getForumTheme(0,20));
             getServletConfig().getServletContext().getRequestDispatcher("/main/mainPage.jsp").forward(request, response);
         } else {
             getServletConfig().getServletContext().getRequestDispatcher("/errorPage.jsp").forward(request, response);

@@ -10,15 +10,16 @@ import java.sql.*;
  */
 public class LoginDataProcess {
     public static void setLoginData(HashMap<String,LoginData> loginDataHashMap) {
-        Connection cn = DBConnections.getConnection();
-
-        Statement stm = DBConnections.getStatment(cn);
 
         for (String key : loginDataHashMap.keySet()) {
+            Connection cn = DBConnections.getConnection();
+
+            Statement stm = DBConnections.getStatment(cn);
+
             /***
              * 如果没有key值,则插入数据
              */
-            if (key.equals("I")) {
+            if ("I".equals(key)) {
                 String SQL = "INSERT INTO LOGINDATA VALUES('" + loginDataHashMap.get("I").getName() + "','"
                             + loginDataHashMap.get("I").getPassword() +"',"+ loginDataHashMap.get("I").getVersion() + ",'"
                             + loginDataHashMap.get("I").getLastLoginDate() + "', '" + loginDataHashMap.get("I").getRegisterDate() + "', " +
@@ -46,15 +47,15 @@ public class LoginDataProcess {
                     System.out.println("保存成功!");
                 }
             }
-        }
-        /***
-         * 关闭连接
-         */
-        try {
-            stm.close();
-            cn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            /***
+             * 关闭连接
+             */
+            try {
+                stm.close();
+                cn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
     public static LoginData getLoginDate(String userName) {

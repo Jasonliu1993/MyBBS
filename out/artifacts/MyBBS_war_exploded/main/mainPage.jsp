@@ -1,4 +1,5 @@
-<%--
+<%@ page import="javabean.ForumTheme" %>
+<%@ page import="java.util.LinkedList" %><%--
   Created by IntelliJ IDEA.
   User: Jason
   Date: 2/22/17
@@ -70,6 +71,14 @@
             height: 50px;
             text-align: center;
         }
+        .mainList li span a{
+            color: #f02136;
+            text-decoration: none;
+        }
+        .mainList li span a:hover{
+            color: #c2e7e8;
+            text-decoration: none;
+        }
         .inputArea {
             width: 1000px;
             height: 300px;
@@ -131,13 +140,18 @@
 </head>
 <body style="background-color: #d5d5d5">
     <div class="title">
-        <span>欢迎: sadfasd</span>
+        <span>欢迎:<%=session.getAttribute("user")%></span>
     </div>
     <div class="mainPage">
         <div class="filled"></div>
         <ul class="mainList">
+            <%  for (ForumTheme forumTheme : (LinkedList<ForumTheme>)request.getAttribute("themeList")) {%>
             <li>
-                <span>sdfadf</span>
+                <span><a href="/SendForumController?page=0&themeID=<%=forumTheme.getID()%>"><%=forumTheme.getForumTheme()%></a></span>
+            </li>
+            <%}%>
+            <li>
+                <span><a href="">sdfadf</a></span>
             </li>
             <li>
                 <span>sdf</span>

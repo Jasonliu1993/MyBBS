@@ -161,7 +161,7 @@
 </head>
 <body style="background-color: #d5d5d5">
 <div class="title">
-    <span>欢迎: sadfasd</span>
+    <span>欢迎: <%=session.getAttribute("user")%></span>
 </div>
 <div class="mainPage">
     <div class="filled"></div>
