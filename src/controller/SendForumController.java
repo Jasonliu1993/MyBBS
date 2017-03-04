@@ -31,17 +31,27 @@ public class SendForumController extends HttpServlet {
             /***
              * 在贴纸主页中获取发帖的信息,以及跟新帖子的样式
              */
-            ResponseThemeList responseThemeList = new ResponseThemeList();
+            String forumThemeIDPage = request.getParameter("forumThemeID");
+            String forumContentFromPage = request.getParameter("contentArea");
+            System.out.println("forumContentFromPage@@@@@" + forumContentFromPage);
+            ForumContent forumContent = new ForumContent();
+            HashMap<String,ForumContent> forumContentHashMap = new HashMap<String,ForumContent>();
 
-            responseThemeList.setTheme("中国你好");
-            responseThemeList.setTheme("测试主题标语");
-            responseThemeList.setCurrentPage("2");
-            responseThemeList.setTotalPage("1");
-            ArrayList<ResponseThemeList> responseThemeLists = new ArrayList<ResponseThemeList>();
-            responseThemeLists.add(responseThemeList);
+            System.out.println("forumThemeIDPage@@@@@" + forumThemeIDPage);
+            forumContent.setID(KeyValue.getKeyValue());
+            forumContent.setOrderID((Integer.valueOf(ForumContentProcess.getForumContentCount(forumThemeIDPage))).toString() + 1);
+            forumContent.setForumContent(forumContentFromPage);
+            forumContent.setCreateUser((String) request.getSession().getAttribute("user"));
+            forumContent.setCreateDateTime(DateUtility.getCurrentDate());
+            forumContent.setForumThemeID(forumThemeIDPage);
+            forumContentHashMap.put("I",forumContent);
+            ForumContentProcess.setForumContent(forumContentHashMap);
+
+            ArrayList<ForumContent> forumContents = new ArrayList<ForumContent>();
+            forumContents.add(forumContent);
             Gson gson = new Gson();
             System.out.println("here!");
-            String json = gson.toJson(responseThemeLists);
+            String json = gson.toJson(forumContents);
             response.setContentType("text/html; charset=utf-8");
             PrintWriter out = response.getWriter();
             System.out.println(json);
@@ -78,9 +88,9 @@ public class SendForumController extends HttpServlet {
             ForumContentProcess.setForumContent(forumContents);
 
             forumContentLinkedList.add(forumContent);
-            request.setAttribute("forumThemes", forumThemes);
+            request.setAttribute("forumTheme", forumTheme);
             request.setAttribute("forumContents", forumContentLinkedList);
-            request.setAttribute("forumCount",1);
+            request.setAttribute("forumCount", 1);
             getServletConfig().getServletContext().getRequestDispatcher("/main/mainForumPage.jsp").forward(request, response);
         } else {
             /***
@@ -96,10 +106,10 @@ public class SendForumController extends HttpServlet {
             LinkedList<ForumContent> forumContents = new LinkedList<ForumContent>();
 
             forumTheme = ForumThemeProcess.getForumTheme(ID);
-            forumContents = ForumContentProcess.getForumContent(forumTheme.getID(),0,20);
-            request.setAttribute("forumThemes", forumTheme);
+            forumContents = ForumContentProcess.getForumContent(forumTheme.getID(), 0, 20);
+            request.setAttribute("forumTheme", forumTheme);
             request.setAttribute("forumContents", forumContents);
-            request.setAttribute("forumCount",forumContents.size());
+            request.setAttribute("forumCount", forumContents.size());
             System.out.println(forumContents.size());
             getServletConfig().getServletContext().getRequestDispatcher("/main/mainForumPage.jsp").forward(request, response);
         }

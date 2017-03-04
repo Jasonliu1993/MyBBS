@@ -58,4 +58,15 @@ public class ForumContent {
     private String createDateTime;
     private String forumThemeID;
     private String createUser;
+
+    @Override
+    public String toString() {
+        return "ForumContent [ID="
+                + ID + ", orderID="
+                + orderID + ", forumContent="
+                + forumContent + ", createDateTime="
+                + createDateTime + ", forumThemeID="
+                + forumThemeID + ", createUser="
+                + createUser + "]";
+    }
 }

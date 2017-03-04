@@ -1,5 +1,6 @@
 <%@ page import="javabean.ForumContent" %>
-<%@ page import="java.util.LinkedList" %><%--
+<%@ page import="java.util.LinkedList" %>
+<%@ page import="javabean.ForumTheme" %><%--
   Created by IntelliJ IDEA.
   User: Jason
   Date: 2/27/17
@@ -10,6 +11,7 @@
 <html>
 <head>
     <title>帖子</title>
+    <script type="text/JavaScript" charset="utf-8" src="/js/jquery-3.1.1.min.js"></script>
     <script charset="utf-8">
         function ajax2SendForum() {
             $.ajax({
@@ -19,16 +21,27 @@
                 dataType: "json",//数据返回类型：xml、json、script
                 cache: false,
                 data: {
-                    'theme': $("#theme").val(),
-                    'content': $("#contentArea").val()
+                    'forumThemeID': $("#forumThemeID").val(),
+                    'contentArea': $("#contentArea").val()
                 },//自定义提交的数据
                 success: function (json) {
-                    if (json.Message !== null || json.Message !== undefined || json.Message !== '') {
-                        /*document.getElementById('inputText').value = '';*/
+                    if (json !== null || json !== undefined || json !== '') {
                         for (var i = 0; i < json.length; i++) {
-                            alert(json[i].theme)
-                            //alert(json.ResponseThemeList.themeID + "@@" + json.ResponseThemeList.theme + "@@" + json.ResponseThemeList.currentPage + "@@" + json.ResponseThemeList.totalPage);
-                            //document.getElementById('displayArea').innerHTML += '<div align="left"><p id="' + ID + '">' + json[i].message + '</p></div>';
+                            /*增加一个li的长度*/
+                            $(".mainPage").css("height",parseInt($(".mainPage").css("height").substring(0, $(".mainPage").css("height").length)) + 250 + 'px');
+                            $(".mainList li:last-child")[0].innerHTML += '<li>' +
+                            '<input type="hidden" id="forumContentID" value="' + json[i].ID + '">' +
+                            '<span class="info">' + json[i].createUser + '</span>' +
+                            '<span class="forumContent">' +
+                            '<div class="mainForumContent">' +
+                            json[i].forumContent +
+                            '</div>' +
+                            '<div class="replyForum">' +
+                            '<span class="datetime">' + json[i].createDateTime + '</span>' +
+                            '<a href="#" class="reply">回复</a>' +
+                            '</div>' +
+                            '</span>' +
+                            '</li>'
                         }
                     }
                 },
@@ -169,7 +182,8 @@
     <ul class="mainList">
         <% for (ForumContent forumContent : ((LinkedList<ForumContent>)request.getAttribute("forumContents"))) {%>
         <li>
-            <span class="info"><%out.write(session.getAttribute("user").toString());%></span>
+            <input type="hidden" id="forumContentID" value="<%=forumContent.getID()%>">
+            <span class="info"><%=forumContent.getCreateUser()%></span>
             <span class="forumContent">
                 <div class="mainForumContent">
                     <%=forumContent.getForumContent()%>
@@ -187,6 +201,7 @@
     <div class="contentArea">
         <span class="contentLabelArea"></span>
         <textarea name="contentArea" id="contentArea" class="contentInputArea"></textarea>
+        <input type="hidden" id="forumThemeID" value="<%=((ForumTheme)request.getAttribute("forumTheme")).getID()%>">
     </div>
     <div class="submitArea">
         <button class="inputBottom" onclick="ajax2SendForum()">回复</button>

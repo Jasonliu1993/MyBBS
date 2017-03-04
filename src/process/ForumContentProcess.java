@@ -84,4 +84,29 @@ public class ForumContentProcess {
         }
         return forumContents;
     }
+    public static int getForumContentCount(String forumThemeID) {
+        int count = 0;
+        Connection cn = DBConnections.getConnection();
+        Statement stm = DBConnections.getStatment(cn);
+        String SQL = "SELECT COUNT(*) COU FROM FORUMCONTENT WHERE FORUMTHEMEID = '" + forumThemeID + "' ";
+        System.out.println(SQL);
+        ResultSet rs = DBConnections.excuteQuery(stm,SQL);
+        try {
+            while (rs.next()) {
+                count = rs.getInt("COU");
+                System.out.println(count);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                rs.close();
+                stm.close();
+                cn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return count;
+    }
 }
