@@ -1,4 +1,5 @@
-<%--
+<%@ page import="javabean.ForumContent" %>
+<%@ page import="java.util.LinkedList" %><%--
   Created by IntelliJ IDEA.
   User: Jason
   Date: 2/27/17
@@ -55,7 +56,7 @@
         }
         .mainPage {
             width: 1000px;
-            height: 2500px; /*250的倍数*/
+            height: <%=(Integer)request.getAttribute("forumCount") * 250 + 30%>px; /*250的倍数 + 30*/
             margin: 0 auto;
             border: 1px solid white;
             box-sizing: border-box;
@@ -166,27 +167,20 @@
 <div class="mainPage">
     <div class="filled"></div>
     <ul class="mainList">
+        <% for (ForumContent forumContent : ((LinkedList<ForumContent>)request.getAttribute("forumContents"))) {%>
         <li>
-            <span class="info">sdfadf</span>
+            <span class="info"><%out.write(session.getAttribute("user").toString());%></span>
             <span class="forumContent">
-                <div class="mainForumContent">lkjdfasldkjqwelgkadjgaslkcjalsdfjadfaflkjdfasldkjqwelgkadjgaslkcjalsdfjadfaflkbrjdfasldkjqwelgkadjgaslkcjalsdfjadfaflkjdfasldkjqwelgkadjgaslkcjalsdfjadfaflkjdfasldkjqwelgkadjgaslkcjalsdfjadfaflkjdfasldkjqwelgkadjgaslkcjalsdfjadfaflkjdfasldkjqwelgkadjgaslkcjalsdfjadfaflkjdfasldkjqwelgkadjgaslkcjalsdfjadfaflkjdfasldkjqwelgkadjgaslkcjalsdfjadfaflkjdfasldkjqwelgkadjgaslkcjalsdfjadfaflkjdfasldkjqwelgkadjgaslkcjalsdfjadfaf
+                <div class="mainForumContent">
+                    <%=forumContent.getForumContent()%>
                 </div>
                 <div class="replyForum">
-                    <span class="datetime">2016-01-20 16:30:27</span>
+                    <span class="datetime"><%=forumContent.getCreateDateTime()%></span>
                     <a href="#" class="reply">回复</a>
                 </div>
             </span>
         </li>
-        <li>
-            <span class="info">sdfadf</span>
-            <span class="forumContent">
-                <div class="mainForumContent">adfaf</div>
-                <div class="replyForum">
-                    <span class="datetime">2016-01-20 16:41:29</span>
-                    <a href="#" class="reply">回复</a>
-                </div>
-            </span>
-        </li>
+        <%}%>
     </ul>
 </div>
 <div class="inputArea">

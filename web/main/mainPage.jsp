@@ -147,15 +147,9 @@
         <ul class="mainList">
             <%  for (ForumTheme forumTheme : (LinkedList<ForumTheme>)request.getAttribute("themeList")) {%>
             <li>
-                <span><a href="/SendForumController?page=0&themeID=<%=forumTheme.getID()%>"><%=forumTheme.getForumTheme()%></a></span>
+                <span><a href="/SendForumController?type=n&page=0&themeID=<%=forumTheme.getID()%>"><%=forumTheme.getForumTheme()%></a></span>
             </li>
             <%}%>
-            <li>
-                <span><a href="">sdfadf</a></span>
-            </li>
-            <li>
-                <span>sdf</span>
-            </li>
         </ul>
     </div>
     <form action="/SendForumController?action=postForum" method="post">

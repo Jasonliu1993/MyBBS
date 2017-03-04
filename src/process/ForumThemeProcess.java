@@ -16,9 +16,10 @@ import utility.KeyValue;
  */
 public class ForumThemeProcess {
     public static void setForumThmee (HashMap<String,ForumTheme> forumThemeHashMap) {
+
+        Connection cn = DBConnections.getConnection();
+        Statement stm = DBConnections.getStatment(cn);
         for (String key : forumThemeHashMap.keySet()) {
-            Connection cn = DBConnections.getConnection();
-            Statement stm = DBConnections.getStatment(cn);
             String SQL = null;
             if ("I".equals(key)) {
                 SQL = "INSERT INTO FORUMTHEME VALUES('"
@@ -31,14 +32,22 @@ public class ForumThemeProcess {
                     System.out.println("保存成功");
                 }
             } else {
-
+                SQL = "UPDATE FORUMTHEME SET FORUMTHEME = '"
+                        + forumThemeHashMap.get(key).getForumTheme() + "', POSTDATETIME = '"
+                        + forumThemeHashMap.get(key).getPostDatetime() + "', FORUMCREATER = '"
+                        + forumThemeHashMap.get(key).getForumCreater() + "', FORUMCONTENTID = '"
+                        + forumThemeHashMap.get(key).getForumContentID() + "' WHERE ID = '"
+                        + forumThemeHashMap.get(key).getID() + "'";
+                if (DBConnections.excute(stm,SQL)) {
+                    System.out.println("保存成功");
+                }
             }
-            try {
-                stm.close();
-                cn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        }
+        try {
+            stm.close();
+            cn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
     public static ForumTheme getForumTheme (String keyID) {
@@ -70,13 +79,14 @@ public class ForumThemeProcess {
     }
     public static LinkedList<ForumTheme> getForumTheme (int curentPage,int pageLong) {
         LinkedList<ForumTheme> forumThemes = new LinkedList<ForumTheme>();
-        ForumTheme forumTheme = new ForumTheme();
+        ForumTheme forumTheme = null;
         String SQL = "SELECT * FROM FORUMTHEME ORDER BY POSTDATETIME DESC LIMIT " + curentPage + ", " + pageLong + "";
         Connection cn = DBConnections.getConnection();
         Statement stm = DBConnections.getStatment(cn);
         ResultSet rs = DBConnections.excuteQuery(stm,SQL);
         try {
             while (rs.next()) {
+                forumTheme = new ForumTheme();
                 forumTheme.setID(rs.getString("ID"));
                 forumTheme.setForumTheme(rs.getString("FORUMTHEME"));
                 forumTheme.setPostDatetime(rs.getString("POSTDATETIME"));
